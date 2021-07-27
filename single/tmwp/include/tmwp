@@ -1,0 +1,68 @@
+#include<map>
+#include<string.h>
+#include<stdio.h>
+#include<iostream>
+using namespace std;
+
+namespace tmwp
+{
+class Request
+{
+public :
+char *method;
+char *resource;
+char isClientSideTechnologyResource;
+char *mimeType;
+int dataCount;
+char **data;
+string forwardTo;
+map<string ,string>keyValues;
+string getValue(string k);
+void setKeyValue(string k,string v);
+string get(string name);//to extract data that has arrived in string
+void forward(string forwardTo);
+
+
+void setInt(char *,int);
+int getInt(char *);
+void setDataCount(int );
+int getDataCount();
+void setResource(char *);
+char * getResource();
+void setIsClientSideResource(char);
+char getIsClientSideResource();
+void setMimeType(char *);
+char *getMimeType();
+void setData(char **data);
+char ** getData();
+void setMethod(char *);
+char * getMethod();
+};
+class Response
+{
+private :
+int clientSocketDescriptor;
+bool isClosed;
+bool headerCreated;
+void createHeader();
+public :
+Response(int clientSocketDescriptor);
+void write(const char *str);
+void write(string str);
+void closeConnection();
+
+};
+class TMWebProjector
+{
+private :
+int portNumber;
+//char *url;
+//void(*ptrOnRequest)(Request&,Response&);
+map<string,void(*)(Request &,Response &)> requestMappings;
+public :
+TMWebProjector(int portNumber);
+~TMWebProjector();
+void start();
+void onRequest(string url,void (*ptrOnRequest)(Request& ,Response&));
+};
+}
