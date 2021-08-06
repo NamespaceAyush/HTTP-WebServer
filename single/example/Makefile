@@ -1,5 +1,5 @@
 all:compile 
 
 compile: 
-	g++ -static myapp.cpp -o server.out -I ../tmwp/include -L ../tmwp/lib -ltmwp
+	g++ -static *.cpp -o server.out -I ../tmwp/include -L ../tmwp/lib -ltmwp
 
