@@ -157,6 +157,11 @@ char isClientSideResource(char *resource)
 int i;
 for(i=0;resource[i]!='\0' && resource[i]!='.';i++);
 if(resource[i]=='\0') return 'N';
+
+if(resource[++i]=='t') return 'N';
+
+
+
 return 'Y';
 }
 Request* parseRequest(char * bytes)
@@ -386,7 +391,7 @@ break; //INTRODUCED BECAUSE OF THE FORWARDING FEARURE
 char *mimeTypes=request->mimeType;
 if((strcmp(mimeTypes,"tpl")==0))
 {
-/*
+/* the one where we send 1  bytes at a time 
 char header[51];
 strcpy(header,"HTTP/1.1 200 OK\nContent-type:text/html\n\n");
 send(clientSocketDescriptor,header,strlen(header),0);
@@ -491,11 +496,7 @@ e=e+g;
 
 }*/
 
-
-
-
-
-
+/*    the one where we send chunk of 1024 bytes
 char header[51];
 strcpy(header,"HTTP/1.1 200 OK\nContent-type:text/html\n\n");
 send(clientSocketDescriptor,header,strlen(header),0);
@@ -582,22 +583,30 @@ j++;
 i++;
 }
 buffer2[j]='\0';
-
 send(clientSocketDescriptor,buffer2,strlen(buffer2),0);
-
 e=e+g;
 }
-
 fclose(ff);
 close(clientSocketDescriptor);
-
-
-
-
-
-
-
 break; 
+*/
+
+//NOW THE ABOVE THING NEEDS TO BE DONE BY A TOOL AT THE TIME WHEN OUR SERVER STARTS
+//Lets CODE
+
+
+//createTPL_H(request->resource);
+
+
+
+
+
+
+
+break;
+
+
+
 }
 fseek(f,0,2);
 len=ftell(f);
@@ -622,6 +631,7 @@ break; //INTRODUCED BECAUSE OF THE FORWARDING FEARURE
 }
 else
 {
+printf("hello\n");
 map<string,void(*)(Request &,Response &)>::iterator iter;
 iter=requestMappings.find(string("/")+string(request->resource));
 if(iter==requestMappings.end())
