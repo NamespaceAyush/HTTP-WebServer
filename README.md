@@ -1,7 +1,9 @@
 # HTTP-WebServer
 An HTTP WebServer in c++
 
+
 A programmer can deploy his/her website/webapps using this server .
+you can edit or use this code in whatever way you want main source code for server in TMWP folder
 
 Template support is also there
 
